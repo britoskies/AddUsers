@@ -1,6 +1,5 @@
 package GUIs;
 import Database.Sql_Connection;
-import java.awt.HeadlessException;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -21,6 +20,7 @@ public class RegisterGUI extends javax.swing.JFrame {
     private String PwdConf = "";
     
     public void getValues(){
+        
         Nombre = tfNombre.getText();
         Apellido = tfApellido.getText();
         Correo = tfCorreo.getText();
@@ -78,7 +78,7 @@ public class RegisterGUI extends javax.swing.JFrame {
  
         try {
             
-            String query = "insert into Cliente (Usuario,Nombre,Apellido,Contraseña,Telefono,Correo)" + " values('" 
+            String query = "insert into Cliente values('" 
                     + Usuario + "','" + Nombre + "','" + Apellido + "','" 
                     + Pwd + "','" + Tel + "','" + Correo + "')";
 
@@ -325,6 +325,7 @@ public class RegisterGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -335,10 +336,11 @@ public class RegisterGUI extends javax.swing.JFrame {
         LoginGUI login = new LoginGUI();
         login.setVisible(true);
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrar;
+    public javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -350,12 +352,12 @@ public class RegisterGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblPwdConf;
     private javax.swing.JLabel lblTel;
     private javax.swing.JLabel lblUsario;
-    private javax.swing.JTextField tfApellido;
-    private javax.swing.JTextField tfCorreo;
-    private javax.swing.JTextField tfNombre;
-    private javax.swing.JTextField tfNombreUsuario;
-    private javax.swing.JPasswordField tfPwdConf;
-    private javax.swing.JPasswordField tfPwdReg;
-    private javax.swing.JTextField tfTelefono;
+    public javax.swing.JTextField tfApellido;
+    public javax.swing.JTextField tfCorreo;
+    public javax.swing.JTextField tfNombre;
+    public javax.swing.JTextField tfNombreUsuario;
+    public javax.swing.JPasswordField tfPwdConf;
+    public javax.swing.JPasswordField tfPwdReg;
+    public javax.swing.JTextField tfTelefono;
     // End of variables declaration//GEN-END:variables
 }

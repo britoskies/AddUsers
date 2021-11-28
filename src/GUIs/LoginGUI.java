@@ -72,6 +72,7 @@ public class LoginGUI extends javax.swing.JFrame {
         setTitle("Inicio de sesión");
         setBackground(new java.awt.Color(242, 240, 240));
         setLocation(new java.awt.Point(800, 300));
+        setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(100, 5));
 
         lblPwd.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
@@ -185,6 +186,7 @@ public class LoginGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
@@ -199,6 +201,7 @@ public class LoginGUI extends javax.swing.JFrame {
         RegisterGUI registro = new RegisterGUI();
         registro.setVisible(true);  
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_lblRegistrarMousePressed
 
 

@@ -3,7 +3,6 @@ import Database.Sql_Connection;
 import java.sql.*;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Insets;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
@@ -14,20 +13,27 @@ public class DashboardGUI extends javax.swing.JFrame {
     Connection con = Sql_Connection.getConnection();
     private Statement st = null;
     private ResultSet rs = null;
+    
+    RegisterGUI reg = new RegisterGUI();
+    
+    DefaultTableModel model;
 
     public DashboardGUI() {
         initComponents();
+        
+        this.model = (DefaultTableModel) dataTable.getModel();
+        
         dataTable.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,12));
         dataTable.getTableHeader().setOpaque(false);
         dataTable.getTableHeader().setBackground(new Color(50,36,34));
         dataTable.getTableHeader().setForeground(new Color(255,255,255));
     }
     
-    public void mostrarData(){
+    private void showData(){
         
         try{
             
-            String query = "select Usuario,Nombre,Apellido,Telefono,Correo from Cliente";
+            String query = "select * from Cliente";
 
             st = con.createStatement();
             rs = st.executeQuery(query);
@@ -35,23 +41,95 @@ public class DashboardGUI extends javax.swing.JFrame {
             
             while (rs.next()){
                 
+                String id = String.valueOf(rs.getInt("id"));
                 String Usuario = rs.getString("Usuario");
                 String Nombre = rs.getString("Nombre");
                 String Apellido = rs.getString("Apellido");
                 String Correo = rs.getString("Correo");
                 String Telefono = rs.getString("Telefono");
 
-                String[] rows = {Usuario,Nombre,Apellido,Correo,Telefono};
-
-                DefaultTableModel model = (DefaultTableModel) dataTable.getModel();
+                String[] rows = {id,Usuario,Nombre,Apellido,Correo,Telefono};
+                
                 model.addRow(rows);
             }
         }
+        
         catch(SQLException e){
             JOptionPane.showMessageDialog(null,e);
         }
     }
    
+    
+    private void deleteData() { 
+  
+        try {
+            
+            // Storing the selected row
+            
+            int rowIndex = dataTable.getSelectedRow();
+            int rowValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
+
+            String query = "delete from Cliente where id = ?";
+            
+            PreparedStatement preparedst = con.prepareStatement(query);
+            preparedst.setInt(1,rowValue);
+   
+            // Checking if their is a row selected
+            
+            if (rowIndex > -1) {
+                model.removeRow(rowIndex);
+                preparedst.execute();
+                JOptionPane.showMessageDialog(null, "Usario eliminado!");
+            }
+            
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
+    
+    
+    private void updateData(){
+        
+        try {
+            
+            reg.setVisible(true);
+            this.setVisible(false);
+            
+            // int rowIndex = dataTable.getSelectedRow();
+            // int indexValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
+            
+            String query = "select * from Cliente";
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            rs = st.getResultSet();
+            
+    //        String userValue = dataTable.getValueAt(rowIndex, 1).toString();
+    //        String nameValue = dataTable.getValueAt(rowIndex, 2).toString();
+    //        String lNameValue = dataTable.getValueAt(rowIndex, 3).toString();
+    //        String mailValue = dataTable.getValueAt(rowIndex, 4).toString();
+    //        String telValue = dataTable.getValueAt(rowIndex, 5).toString();
+
+            
+            while (rs.next()){
+    
+                reg.tfNombreUsuario.setText(rs.getString("Usuario"));
+                reg.tfNombre.setText(rs.getString("Nombre"));
+                reg.tfApellido.setText(rs.getString("Apellido"));
+                reg.tfCorreo.setText(rs.getString("Correo"));
+                reg.tfTelefono.setText(rs.getString("Telefono"));
+                reg.tfPwdReg.setText(rs.getString("Contraseña"));
+                reg.tfPwdConf.setText(rs.getString("Contraseña"));
+                
+                reg.btnRegistrar.setText("ACTUALIZAR");
+            }
+        } 
+        
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -59,8 +137,7 @@ public class DashboardGUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        btnMostrar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnCerrarS = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnNuevo1 = new javax.swing.JButton();
@@ -71,6 +148,11 @@ public class DashboardGUI extends javax.swing.JFrame {
         setTitle("Vista de Datos");
         setFocusableWindowState(false);
         setLocation(new java.awt.Point(500, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(50, 36, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
@@ -98,25 +180,14 @@ public class DashboardGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnMostrar.setBackground(new java.awt.Color(19, 28, 70));
-        btnMostrar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        btnMostrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnMostrar.setText("MOSTRAR DATOS");
-        btnMostrar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
-        btnMostrar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setBackground(new java.awt.Color(19, 28, 70));
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setText("EDITAR");
+        btnEditar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMostrarActionPerformed(evt);
-            }
-        });
-
-        btnActualizar.setBackground(new java.awt.Color(19, 28, 70));
-        btnActualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
-        btnActualizar.setText("ACTUALIZAR");
-        btnActualizar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -163,11 +234,11 @@ public class DashboardGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Usuario", "Nombre", "Apellido", "Correo", "Telefono"
+                "Id", "Usuario", "Nombre", "Apellido", "Correo", "Telefono"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -183,6 +254,7 @@ public class DashboardGUI extends javax.swing.JFrame {
             dataTable.getColumnModel().getColumn(2).setResizable(false);
             dataTable.getColumnModel().getColumn(3).setResizable(false);
             dataTable.getColumnModel().getColumn(4).setResizable(false);
+            dataTable.getColumnModel().getColumn(5).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,19 +263,19 @@ public class DashboardGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(102, 102, 102)
-                        .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCerrarS, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(217, 217, 217))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,24 +287,25 @@ public class DashboardGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
-        mostrarData();
-    }//GEN-LAST:event_btnMostrarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       try{
+           updateData();
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null, "No existen filas seleccionadas");
+       }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCerrarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSActionPerformed
         LoginGUI log = new LoginGUI();
@@ -241,21 +314,29 @@ public class DashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+       try{
+           deleteData();
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null, "No existen filas seleccionadas");
+       }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
-        RegisterGUI reg = new RegisterGUI();
         reg.setVisible(true);
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnNuevo1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        showData();
+    }//GEN-LAST:event_formWindowOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnCerrarS;
-    private javax.swing.JButton btnMostrar;
+    public javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevo1;
     private javax.swing.JTable dataTable;
     private javax.swing.JLabel jLabel2;
