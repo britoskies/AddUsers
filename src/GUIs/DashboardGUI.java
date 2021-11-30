@@ -10,9 +10,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
 // Applying Inheritance 
+
 public class DashboardGUI extends javax.swing.JFrame {
 
     // Instances
+    
     Connection con = Sql_Connection.getConnection();
 
     private Statement st = null;
@@ -23,13 +25,16 @@ public class DashboardGUI extends javax.swing.JFrame {
     DefaultTableModel model;
 
     // Constructor
+    
     public DashboardGUI() {
         initComponents();
 
         // Table model for modification purposes
+        
         this.model = (DefaultTableModel) dataTable.getModel();
 
         // Table header special design
+        
         dataTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         dataTable.getTableHeader().setOpaque(false);
         dataTable.getTableHeader().setBackground(new Color(50, 36, 34));
@@ -250,7 +255,9 @@ public class DashboardGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 // METHODS
+    
     // Show data method
+    
     private void showData() {
 
         try {
@@ -285,6 +292,7 @@ public class DashboardGUI extends javax.swing.JFrame {
         try {
 
             // Storing the selected row
+            
             int rowIndex = dataTable.getSelectedRow();
             int rowValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
 
@@ -294,6 +302,7 @@ public class DashboardGUI extends javax.swing.JFrame {
             preparedst.setInt(1, rowValue);
 
             // Checking if their is a row selected
+            
             if (rowIndex > -1) {
                 model.removeRow(rowIndex);
                 preparedst.execute();
@@ -306,6 +315,7 @@ public class DashboardGUI extends javax.swing.JFrame {
     }
 
     // Update data method
+    
     private void updateData() {
 
         int rowIndex = dataTable.getSelectedRow();
@@ -343,6 +353,7 @@ public class DashboardGUI extends javax.swing.JFrame {
             }
 
             // Update event
+            
             for (ActionListener al : reg.btnRegistrar.getActionListeners()) {
                 reg.btnRegistrar.removeActionListener(al);
             }
@@ -380,6 +391,7 @@ public class DashboardGUI extends javax.swing.JFrame {
             });
 
             // Go back event
+            
             for (ActionListener al : reg.btnVolver.getActionListeners()) {
                 reg.btnVolver.removeActionListener(al);
             }
