@@ -51,7 +51,7 @@ public class RegisterGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         tfName = new javax.swing.JTextField();
         lblApellido = new javax.swing.JLabel();
@@ -79,11 +79,11 @@ public class RegisterGUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(50, 36, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
-        jLabel2.setBackground(new java.awt.Color(36, 122, 228));
-        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("REGISTRO");
+        lblTitle.setBackground(new java.awt.Color(36, 122, 228));
+        lblTitle.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("REGISTRO");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,14 +91,14 @@ public class RegisterGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(264, 264, 264))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -287,8 +287,7 @@ public class RegisterGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton btnVolver;
-    private javax.swing.JLabel jLabel2;
+    public javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblApellido;
@@ -297,6 +296,7 @@ public class RegisterGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblPwd;
     private javax.swing.JLabel lblPwdConf;
     private javax.swing.JLabel lblTel;
+    public javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsario;
     public javax.swing.JTextField tfLastName;
     public javax.swing.JTextField tfMail;

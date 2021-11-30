@@ -1,53 +1,48 @@
 package GUIs;
+
 import Database.Sql_Connection;
 import java.sql.*;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
 // Applying Inheritance 
-
 public class DashboardGUI extends javax.swing.JFrame {
 
     // Instances
-      
     Connection con = Sql_Connection.getConnection();
-    
+
     private Statement st = null;
     private ResultSet rs = null;
-    
-    RegisterGUI reg = new RegisterGUI();
-    
-    DefaultTableModel model;
-    
-    // Constructor
 
+    RegisterGUI reg = new RegisterGUI();
+
+    DefaultTableModel model;
+
+    // Constructor
     public DashboardGUI() {
         initComponents();
-        
-        // Table model for modification purposes
-        
-        this.model = (DefaultTableModel) dataTable.getModel();
-        
-        // Table header special design
-        
-        dataTable.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,12));
-        dataTable.getTableHeader().setOpaque(false);
-        dataTable.getTableHeader().setBackground(new Color(50,36,34));
-        dataTable.getTableHeader().setForeground(new Color(255,255,255));
-    }
-    
-   
-    
-    // DESIGN BLOCK
 
+        // Table model for modification purposes
+        this.model = (DefaultTableModel) dataTable.getModel();
+
+        // Table header special design
+        dataTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        dataTable.getTableHeader().setOpaque(false);
+        dataTable.getTableHeader().setBackground(new Color(50, 36, 34));
+        dataTable.getTableHeader().setForeground(new Color(255, 255, 255));
+    }
+
+    // DESIGN BLOCK
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
         btnCerrarS = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
@@ -69,11 +64,11 @@ public class DashboardGUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(50, 36, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
-        jLabel2.setBackground(new java.awt.Color(36, 122, 228));
-        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("PANTALLA PRINCIPAL");
+        lblTitle.setBackground(new java.awt.Color(36, 122, 228));
+        lblTitle.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("PANTALLA PRINCIPAL");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -81,14 +76,14 @@ public class DashboardGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(365, 365, 365)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -209,14 +204,13 @@ public class DashboardGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       try{
-           updateData();
-       }
-       catch (Exception e){
-           JOptionPane.showMessageDialog(null, "No existen filas seleccionadas");
-       }
+        try {
+            updateData();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No hay filas seleccionadas");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCerrarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSActionPerformed
@@ -226,12 +220,11 @@ public class DashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-       try{
-           deleteData();
-       }
-       catch (Exception e){
-           JOptionPane.showMessageDialog(null, "No existen filas seleccionadas");
-       }
+        try {
+            deleteData();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No hay filas seleccionadas");
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
@@ -251,29 +244,25 @@ public class DashboardGUI extends javax.swing.JFrame {
     public javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevo1;
     private javax.swing.JTable dataTable;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
-    
-    
 
 // METHODS
-    
     // Show data method
-    
-    private void showData(){
-        
-        try{
-            
+    private void showData() {
+
+        try {
+
             String query = "select * from Cliente";
 
             st = con.createStatement();
             rs = st.executeQuery(query);
             rs = st.getResultSet();
-            
-            while (rs.next()){
-                
+
+            while (rs.next()) {
+
                 String id = String.valueOf(rs.getInt("id"));
                 String Usuario = rs.getString("Usuario");
                 String Nombre = rs.getString("Nombre");
@@ -281,90 +270,131 @@ public class DashboardGUI extends javax.swing.JFrame {
                 String Correo = rs.getString("Correo");
                 String Telefono = rs.getString("Telefono");
 
-                String[] row = {id,Usuario,Nombre,Apellido,Correo,Telefono};
-                
+                String[] row = {id, Usuario, Nombre, Apellido, Correo, Telefono};
+
                 model.addRow(row);
             }
-        }
-        
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
-   
-    
+
     // Delete data method
-    
-    private void deleteData() { 
-  
+    private void deleteData() {
+
         try {
-            
+
             // Storing the selected row
-            
             int rowIndex = dataTable.getSelectedRow();
             int rowValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
 
             String query = "delete from Cliente where id = ?";
-            
+
             PreparedStatement preparedst = con.prepareStatement(query);
-            preparedst.setInt(1,rowValue);
-   
+            preparedst.setInt(1, rowValue);
+
             // Checking if their is a row selected
-            
             if (rowIndex > -1) {
                 model.removeRow(rowIndex);
                 preparedst.execute();
-                JOptionPane.showMessageDialog(null, "Usario eliminado!");
+                JOptionPane.showMessageDialog(null, "Usuario eliminado!");
             }
-            
+
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, ex);
-        }
-    }
-    
-    
-    // Update data method
-    
-    private void updateData(){
-        
-        try {
-            
-            reg.setVisible(true);
-            this.setVisible(false);
-            
-            int rowIndex = dataTable.getSelectedRow();
-            // int indexValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
-            
-            String query = "select * from Cliente";
-    
-            if (rowIndex > -1){
-            
-                st = con.createStatement();
-                rs = st.executeQuery(query);
-                rs = st.getResultSet();
-                
-                while (rs.next()){
-
-                    reg.tfUserName.setText(rs.getString("Usuario"));
-                    reg.tfName.setText(rs.getString("Nombre"));
-                    reg.tfLastName.setText(rs.getString("Apellido"));
-                    reg.tfMail.setText(rs.getString("Correo"));
-                    reg.tfTel.setText(rs.getString("Telefono"));
-                    reg.tfPwd.setText(rs.getString("Contraseña"));
-                    reg.tfPwdConf.setText(rs.getString("Contraseña"));
-
-                    reg.btnRegistrar.setText("ACTUALIZAR");
-                }
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "No existen filas seleccionadas");
-            }
-        } 
-        
-        catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
+
+    // Update data method
+    private void updateData() {
+
+        int rowIndex = dataTable.getSelectedRow();
+        int indexValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
+
+        String query = "select * from Cliente where id ='" + indexValue + "'";
+
+        if (rowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "No hay filas seleccionadas");
+            return;
+        }
+
+        try {
+
+            reg.setVisible(true);
+            this.setVisible(false);
+
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            rs = st.getResultSet();
+
+            while (rs.next()) {
+
+                reg.tfUserName.setText(rs.getString("Usuario"));
+                reg.tfName.setText(rs.getString("Nombre"));
+                reg.tfLastName.setText(rs.getString("Apellido"));
+                reg.tfMail.setText(rs.getString("Correo"));
+                reg.tfTel.setText(rs.getString("Telefono"));
+                reg.tfPwd.setText(rs.getString("Contraseña"));
+                reg.tfPwdConf.setText(rs.getString("Contraseña"));
+
+                reg.btnRegistrar.setText("ACTUALIZAR");
+                reg.lblTitle.setText("MODIFICAR");
+
+            }
+
+            // Update event
+            for (ActionListener al : reg.btnRegistrar.getActionListeners()) {
+                reg.btnRegistrar.removeActionListener(al);
+            }
+
+            reg.btnRegistrar.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent e) {
+
+                    try {
+
+                        PreparedStatement ps = con.prepareStatement("update Cliente set Usuario=?,Nombre=?,Apellido=?,Contraseña=?,"
+                                + "Telefono=?,Correo=? where id=?;");
+
+                        ps.setString(1, reg.tfUserName.getText());
+                        ps.setString(2, reg.tfName.getText());
+                        ps.setString(3, reg.tfLastName.getText());
+                        ps.setString(4, reg.tfMail.getText());
+                        ps.setString(5, reg.tfTel.getText());
+                        ps.setString(6, reg.tfPwd.getText());
+                        ps.setInt(7, indexValue);
+
+                        ps.execute();
+
+                        JOptionPane.showMessageDialog(null, "Registro actualizado correctamente");
+
+                        DashboardGUI dash = new DashboardGUI();
+                        dash.setVisible(true);
+                        reg.setVisible(false);
+
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "No se pudo actualizar! \nInténtelo de nuevo");
+                        JOptionPane.showMessageDialog(null, ex);
+                    }
+                }
+            });
+
+            // Go back event
+            for (ActionListener al : reg.btnVolver.getActionListeners()) {
+                reg.btnVolver.removeActionListener(al);
+            }
+
+            reg.btnVolver.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+
+                    DashboardGUI dash = new DashboardGUI();
+                    dash.setVisible(true);
+                    reg.setVisible(false);
+                }
+            });
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No hay filas seleccionadas");
+        }
+    }
 }
-
-
