@@ -72,11 +72,11 @@ public class RegisterGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registration");
-        setBackground(new java.awt.Color(242, 240, 240));
+        setBackground(new java.awt.Color(223, 238, 234));
         setLocation(new java.awt.Point(650, 300));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(50, 36, 34));
+        jPanel1.setBackground(new java.awt.Color(47, 93, 98));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
         lblTitle.setBackground(new java.awt.Color(36, 122, 228));
@@ -166,6 +166,8 @@ public class RegisterGUI extends javax.swing.JFrame {
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("REGISTRAR");
         btnRegistrar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrar.setRolloverEnabled(true);
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
@@ -177,6 +179,8 @@ public class RegisterGUI extends javax.swing.JFrame {
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
         btnVolver.setText("VOLVER");
         btnVolver.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVolver.setRolloverEnabled(true);
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVolverActionPerformed(evt);

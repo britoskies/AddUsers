@@ -19,8 +19,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
     public LoginGUI() {
         initComponents();
-    }    
-    
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -37,7 +36,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Log in");
-        setBackground(new java.awt.Color(242, 240, 240));
+        setBackground(new java.awt.Color(167, 196, 188));
         setLocation(new java.awt.Point(800, 300));
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(100, 5));
@@ -55,11 +54,6 @@ public class LoginGUI extends javax.swing.JFrame {
         tfUser.setToolTipText("Inserte el nombre de usuario");
         tfUser.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         tfUser.setName(""); // NOI18N
-        tfUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUserActionPerformed(evt);
-            }
-        });
 
         tfPwd.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         tfPwd.setToolTipText("Inserte su contraseña");
@@ -70,6 +64,8 @@ public class LoginGUI extends javax.swing.JFrame {
         btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
         btnIniciar.setText("INICIAR");
         btnIniciar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnIniciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIniciar.setRolloverEnabled(true);
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarActionPerformed(evt);
@@ -86,7 +82,7 @@ public class LoginGUI extends javax.swing.JFrame {
             }
         });
 
-        pnlTitle.setBackground(new java.awt.Color(50, 36, 34));
+        pnlTitle.setBackground(new java.awt.Color(47, 93, 98));
         pnlTitle.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
         lblLogin.setBackground(new java.awt.Color(36, 122, 228));
@@ -156,10 +152,6 @@ public class LoginGUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tfUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUserActionPerformed
- 
-    }//GEN-LAST:event_tfUserActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         signIn();

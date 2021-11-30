@@ -37,11 +37,12 @@ public class DashboardGUI extends javax.swing.JFrame {
         
         dataTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         dataTable.getTableHeader().setOpaque(false);
-        dataTable.getTableHeader().setBackground(new Color(50, 36, 34));
+        dataTable.getTableHeader().setBackground(new Color(94, 139, 126));
         dataTable.getTableHeader().setForeground(new Color(255, 255, 255));
     }
 
     // DESIGN BLOCK
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -57,6 +58,7 @@ public class DashboardGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Data Viewer");
+        setBackground(new java.awt.Color(223, 238, 234));
         setFocusableWindowState(false);
         setLocation(new java.awt.Point(500, 300));
         setResizable(false);
@@ -66,7 +68,7 @@ public class DashboardGUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(50, 36, 34));
+        jPanel1.setBackground(new java.awt.Color(47, 93, 98));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
         lblTitle.setBackground(new java.awt.Color(36, 122, 228));
@@ -97,6 +99,8 @@ public class DashboardGUI extends javax.swing.JFrame {
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("EDITAR");
         btnEditar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.setRolloverEnabled(true);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -110,6 +114,7 @@ public class DashboardGUI extends javax.swing.JFrame {
         btnCerrarS.setToolTipText("");
         btnCerrarS.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
         btnCerrarS.setBorderPainted(false);
+        btnCerrarS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCerrarS.setFocusPainted(false);
         btnCerrarS.setIconTextGap(0);
         btnCerrarS.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +128,8 @@ public class DashboardGUI extends javax.swing.JFrame {
         btnBorrar.setForeground(new java.awt.Color(255, 255, 255));
         btnBorrar.setText("BORRAR");
         btnBorrar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnBorrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBorrar.setRolloverEnabled(true);
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrarActionPerformed(evt);
@@ -134,6 +141,8 @@ public class DashboardGUI extends javax.swing.JFrame {
         btnNuevo1.setForeground(new java.awt.Color(255, 255, 255));
         btnNuevo1.setText("NUEVO");
         btnNuevo1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 0, 0, 0));
+        btnNuevo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevo1.setRolloverEnabled(true);
         btnNuevo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevo1ActionPerformed(evt);
@@ -158,6 +167,8 @@ public class DashboardGUI extends javax.swing.JFrame {
             }
         });
         dataTable.setRowHeight(25);
+        dataTable.setRowMargin(0);
+        dataTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
         dataTable.setShowVerticalLines(false);
         jScrollPane2.setViewportView(dataTable);
         if (dataTable.getColumnModel().getColumnCount() > 0) {
@@ -285,8 +296,10 @@ public class DashboardGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
 
     // Delete data method
+    
     private void deleteData() {
 
         try {
@@ -349,7 +362,6 @@ public class DashboardGUI extends javax.swing.JFrame {
 
                 reg.btnRegistrar.setText("ACTUALIZAR");
                 reg.lblTitle.setText("MODIFICAR");
-
             }
 
             // Update event
