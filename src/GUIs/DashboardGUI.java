@@ -6,22 +6,31 @@ import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
+// Applying Inheritance 
+
 public class DashboardGUI extends javax.swing.JFrame {
 
-    // Instancia de conexión 
+    // Instances
       
     Connection con = Sql_Connection.getConnection();
+    
     private Statement st = null;
     private ResultSet rs = null;
     
     RegisterGUI reg = new RegisterGUI();
     
     DefaultTableModel model;
+    
+    // Constructor
 
     public DashboardGUI() {
         initComponents();
         
+        // Table model for modification purposes
+        
         this.model = (DefaultTableModel) dataTable.getModel();
+        
+        // Table header special design
         
         dataTable.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,12));
         dataTable.getTableHeader().setOpaque(false);
@@ -29,107 +38,9 @@ public class DashboardGUI extends javax.swing.JFrame {
         dataTable.getTableHeader().setForeground(new Color(255,255,255));
     }
     
-    private void showData(){
-        
-        try{
-            
-            String query = "select * from Cliente";
-
-            st = con.createStatement();
-            rs = st.executeQuery(query);
-            rs = st.getResultSet();
-            
-            while (rs.next()){
-                
-                String id = String.valueOf(rs.getInt("id"));
-                String Usuario = rs.getString("Usuario");
-                String Nombre = rs.getString("Nombre");
-                String Apellido = rs.getString("Apellido");
-                String Correo = rs.getString("Correo");
-                String Telefono = rs.getString("Telefono");
-
-                String[] rows = {id,Usuario,Nombre,Apellido,Correo,Telefono};
-                
-                model.addRow(rows);
-            }
-        }
-        
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e);
-        }
-    }
    
     
-    private void deleteData() { 
-  
-        try {
-            
-            // Storing the selected row
-            
-            int rowIndex = dataTable.getSelectedRow();
-            int rowValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
-
-            String query = "delete from Cliente where id = ?";
-            
-            PreparedStatement preparedst = con.prepareStatement(query);
-            preparedst.setInt(1,rowValue);
-   
-            // Checking if their is a row selected
-            
-            if (rowIndex > -1) {
-                model.removeRow(rowIndex);
-                preparedst.execute();
-                JOptionPane.showMessageDialog(null, "Usario eliminado!");
-            }
-            
-        } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, ex);
-        }
-    }
-    
-    
-    
-    private void updateData(){
-        
-        try {
-            
-            reg.setVisible(true);
-            this.setVisible(false);
-            
-            // int rowIndex = dataTable.getSelectedRow();
-            // int indexValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
-            
-            String query = "select * from Cliente";
-            st = con.createStatement();
-            rs = st.executeQuery(query);
-            rs = st.getResultSet();
-            
-    //        String userValue = dataTable.getValueAt(rowIndex, 1).toString();
-    //        String nameValue = dataTable.getValueAt(rowIndex, 2).toString();
-    //        String lNameValue = dataTable.getValueAt(rowIndex, 3).toString();
-    //        String mailValue = dataTable.getValueAt(rowIndex, 4).toString();
-    //        String telValue = dataTable.getValueAt(rowIndex, 5).toString();
-
-            
-            while (rs.next()){
-    
-                reg.tfNombreUsuario.setText(rs.getString("Usuario"));
-                reg.tfNombre.setText(rs.getString("Nombre"));
-                reg.tfApellido.setText(rs.getString("Apellido"));
-                reg.tfCorreo.setText(rs.getString("Correo"));
-                reg.tfTelefono.setText(rs.getString("Telefono"));
-                reg.tfPwdReg.setText(rs.getString("Contraseña"));
-                reg.tfPwdConf.setText(rs.getString("Contraseña"));
-                
-                reg.btnRegistrar.setText("ACTUALIZAR");
-            }
-        } 
-        
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-
-    }
+    // DESIGN BLOCK
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -145,9 +56,10 @@ public class DashboardGUI extends javax.swing.JFrame {
         dataTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Vista de Datos");
+        setTitle("Data Viewer");
         setFocusableWindowState(false);
         setLocation(new java.awt.Point(500, 300));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -343,4 +255,116 @@ public class DashboardGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+    
+    
+
+// METHODS
+    
+    // Show data method
+    
+    private void showData(){
+        
+        try{
+            
+            String query = "select * from Cliente";
+
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            rs = st.getResultSet();
+            
+            while (rs.next()){
+                
+                String id = String.valueOf(rs.getInt("id"));
+                String Usuario = rs.getString("Usuario");
+                String Nombre = rs.getString("Nombre");
+                String Apellido = rs.getString("Apellido");
+                String Correo = rs.getString("Correo");
+                String Telefono = rs.getString("Telefono");
+
+                String[] row = {id,Usuario,Nombre,Apellido,Correo,Telefono};
+                
+                model.addRow(row);
+            }
+        }
+        
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+   
+    
+    // Delete data method
+    
+    private void deleteData() { 
+  
+        try {
+            
+            // Storing the selected row
+            
+            int rowIndex = dataTable.getSelectedRow();
+            int rowValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
+
+            String query = "delete from Cliente where id = ?";
+            
+            PreparedStatement preparedst = con.prepareStatement(query);
+            preparedst.setInt(1,rowValue);
+   
+            // Checking if their is a row selected
+            
+            if (rowIndex > -1) {
+                model.removeRow(rowIndex);
+                preparedst.execute();
+                JOptionPane.showMessageDialog(null, "Usario eliminado!");
+            }
+            
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
+    
+    // Update data method
+    
+    private void updateData(){
+        
+        try {
+            
+            reg.setVisible(true);
+            this.setVisible(false);
+            
+            int rowIndex = dataTable.getSelectedRow();
+            // int indexValue = Integer.parseInt(dataTable.getValueAt(rowIndex, 0).toString());
+            
+            String query = "select * from Cliente";
+    
+            if (rowIndex > -1){
+            
+                st = con.createStatement();
+                rs = st.executeQuery(query);
+                rs = st.getResultSet();
+                
+                while (rs.next()){
+
+                    reg.tfUserName.setText(rs.getString("Usuario"));
+                    reg.tfName.setText(rs.getString("Nombre"));
+                    reg.tfLastName.setText(rs.getString("Apellido"));
+                    reg.tfMail.setText(rs.getString("Correo"));
+                    reg.tfTel.setText(rs.getString("Telefono"));
+                    reg.tfPwd.setText(rs.getString("Contraseña"));
+                    reg.tfPwdConf.setText(rs.getString("Contraseña"));
+
+                    reg.btnRegistrar.setText("ACTUALIZAR");
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "No existen filas seleccionadas");
+            }
+        } 
+        
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
 }
+
+

@@ -1,21 +1,21 @@
 package Database;
 import java.sql.*;
 
-// Conexión a MySql utilizando Singleton Pattern
+// SQL connection using Singleton Pattern
 
 public class Sql_Connection {
     
-    // Encapsulando atributos a utilizar
+    // Encapsulating atributes
    
     private String url;
     private String usuario;
     private String password;
 
-    // Instancia de nuestra conexión
+    // Private & Static instance of connection
     
     private static Connection con = null;
     
-    // Constructor privado que permite acceder a él solo desde un método
+    // Private constructor to be able to access on to our connection
     
     private Sql_Connection(){
         
@@ -32,7 +32,7 @@ public class Sql_Connection {
         }
     }
     
-    // Método para realizar la conexión
+    // To establish SQL connection
     
     public static Connection getConnection(){
         
@@ -43,7 +43,7 @@ public class Sql_Connection {
         return con;
     }
     
-    // Método para cerrar la conexión
+    // To close connection
     
     public static void closeConnection() throws SQLException{
         if(con != null){

@@ -3,7 +3,7 @@ import java.sql.*;
 import Database.Sql_Connection;
 import javax.swing.JOptionPane;
 
-// Aplicando paradigma de herencia
+// Applying Inheritance 
 
 public class LoginGUI extends javax.swing.JFrame {
     
@@ -11,48 +11,15 @@ public class LoginGUI extends javax.swing.JFrame {
     private Statement st = null;
     private ResultSet rs = null;
     
-    // Instancia de conexión 
+    // Connection Instance
     
     Connection con = Sql_Connection.getConnection();
+    
+    // Constructor
 
     public LoginGUI() {
         initComponents();
     }    
-    
-    // Método que valida los valores del login
-    
-    private void signIn(){
-
-        try {
-            
-            String query = "select Usuario, Contraseña from Cliente where Usuario = '" + tfUsuario.getText() 
-                           + "' and Contraseña = '" + tfPwd.getText() +"'";
-            
-            st = con.createStatement();
-            rs = st.executeQuery(query);
-            rs = st.getResultSet();
-            
-            if (rs.next()) {
-                DashboardGUI dash = new DashboardGUI();
-                dash.setVisible(true);
-                this.setVisible(false);
-            }
-            
-            else if (tfUsuario.getText().isEmpty() || tfPwd.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, 
-                        "Debe ingresar su usuario y contraseña\n*Si no está registrado debe registrarse"
-                );
-            }
-            
-            else {
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta!");
-            }
-        }
-        catch (SQLException ex){ 
-            ex.printStackTrace();
-        }
-
-    }
     
 
     @SuppressWarnings("unchecked")
@@ -61,7 +28,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
         lblPwd = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
-        tfUsuario = new javax.swing.JTextField();
+        tfUser = new javax.swing.JTextField();
         tfPwd = new javax.swing.JPasswordField();
         btnIniciar = new javax.swing.JButton();
         lblRegistrar = new javax.swing.JLabel();
@@ -69,11 +36,12 @@ public class LoginGUI extends javax.swing.JFrame {
         lblLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Inicio de sesión");
+        setTitle("Log in");
         setBackground(new java.awt.Color(242, 240, 240));
         setLocation(new java.awt.Point(800, 300));
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(100, 5));
+        setResizable(false);
 
         lblPwd.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         lblPwd.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -83,13 +51,13 @@ public class LoginGUI extends javax.swing.JFrame {
         lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblUsuario.setText("Usuario");
 
-        tfUsuario.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfUsuario.setToolTipText("Inserte el nombre de usuario");
-        tfUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfUsuario.setName(""); // NOI18N
-        tfUsuario.addActionListener(new java.awt.event.ActionListener() {
+        tfUser.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfUser.setToolTipText("Inserte el nombre de usuario");
+        tfUser.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfUser.setName(""); // NOI18N
+        tfUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuarioActionPerformed(evt);
+                tfUserActionPerformed(evt);
             }
         });
 
@@ -152,7 +120,7 @@ public class LoginGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(96, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(tfUsuario)
+                    .addComponent(tfUser)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
@@ -173,7 +141,7 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfUser, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(lblPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,9 +157,9 @@ public class LoginGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
+    private void tfUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUserActionPerformed
  
-    }//GEN-LAST:event_tfUsuarioActionPerformed
+    }//GEN-LAST:event_tfUserActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         signIn();
@@ -213,6 +181,47 @@ public class LoginGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel pnlTitle;
     private javax.swing.JPasswordField tfPwd;
-    private javax.swing.JTextField tfUsuario;
+    private javax.swing.JTextField tfUser;
     // End of variables declaration//GEN-END:variables
+    
+
+// METHODS
+    
+    // Sign in to the system method
+    
+    private void signIn(){
+
+        try {
+            
+            String query = "select Usuario, Contraseña from Cliente where Usuario = '" + tfUser.getText() 
+                           + "' and Contraseña = '" + tfPwd.getText() +"'";
+            
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            rs = st.getResultSet();
+            
+            // Open DashBoard after logged in
+            
+            if (rs.next()) {
+                DashboardGUI dash = new DashboardGUI();
+                dash.setVisible(true);
+                this.setVisible(false);
+            }
+            
+            // Checking for empty fields or putting the wrong password
+            
+            else if (tfUser.getText().isEmpty() || tfPwd.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, 
+                        "Debe ingresar su usuario y contraseña\n*Si no está registrado debe registrarse"
+                );
+            }
+            
+            else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta!");
+            }
+        }
+        catch (SQLException e){ 
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 }

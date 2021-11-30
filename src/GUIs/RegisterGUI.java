@@ -3,103 +3,48 @@ import Database.Sql_Connection;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
+// Applying Inheritance 
+
 public class RegisterGUI extends javax.swing.JFrame {
 
-    // Instancia de conexión 
+    // Instances 
         
     Connection con = Sql_Connection.getConnection();
- 
-    // Atributos para los TextField
+    private Statement st = null;
+    private ResultSet rs = null;
+
+    // TextField Atributes
     
-    private String Nombre = "";
-    private String Apellido = ""; 
-    private String Correo = ""; 
-    private String Usuario = ""; 
-    private String Tel = ""; 
-    private String Pwd = ""; 
-    private String PwdConf = "";
+    private String name;
+    private String lastName; 
+    private String mail; 
+    private String user; 
+    private String tel; 
+    private String pwd; 
+    private String pwdConf;
+    
+    // Setting atribute values
     
     public void getValues(){
         
-        Nombre = tfNombre.getText();
-        Apellido = tfApellido.getText();
-        Correo = tfCorreo.getText();
-        Usuario = tfNombreUsuario.getText();
-        Tel = tfTelefono.getText();
-        Pwd = tfPwdReg.getText();
-        PwdConf = tfPwdConf.getText();
+        name = tfName.getText();
+        lastName = tfLastName.getText();
+        mail = tfMail.getText();
+        user = tfUserName.getText();
+        tel = tfTel.getText();
+        pwd = tfPwd.getText();
+        pwdConf = tfPwdConf.getText();
     }
     
+    // Constructor
     
     public RegisterGUI() {
         initComponents();
     }
     
     
-    // Método de validaciones
     
-    private boolean gestion(){
-        
-        getValues();
-        
-        String[] values = {Usuario,Nombre,Apellido,Pwd,PwdConf,Tel,Correo};
-        
-        boolean validate = true;
-        
-        for (String i: values){
-            if (i.isEmpty() == true){
-                validate = true;
-                break;
-            } else {
-                validate = false;
-            }
-        }
-        
-        if (validate == false){
-            if (!Pwd.equals(PwdConf)){
-               JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden!");
-               return true;
-             } else {
-                    return validate;
-               }
-        } else {
-            return validate;
-        }
-    }
-
-    
-     // Método de registro
-    
-    private void signUp(){
-        
-        getValues();
-        
-        LoginGUI login = new LoginGUI();
- 
-        try {
-            
-            String query = "insert into Cliente values('" 
-                    + Usuario + "','" + Nombre + "','" + Apellido + "','" 
-                    + Pwd + "','" + Tel + "','" + Correo + "')";
-
-            Statement st = con.createStatement();
-            
-            // Manejo de alertas
-           
-            if (gestion() == true){
-               JOptionPane.showMessageDialog(null, "Recuerde que no puede dejar campos vacíos");
-            } else {
-               st.executeUpdate(query);
-               JOptionPane.showMessageDialog(null, "Bienvenido " + Usuario +"\nsu usuario ha sido registrado!");
-               login.setVisible(true);
-               this.setVisible(false);
-            }
-            
-        } catch (SQLException exception) {
-            JOptionPane.showMessageDialog(null,exception);
-        }
-    }
-        
+    // DESIGN BLOCK    
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -108,27 +53,28 @@ public class RegisterGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        tfNombre = new javax.swing.JTextField();
+        tfName = new javax.swing.JTextField();
         lblApellido = new javax.swing.JLabel();
-        tfApellido = new javax.swing.JTextField();
+        tfLastName = new javax.swing.JTextField();
         lblUsario = new javax.swing.JLabel();
-        tfNombreUsuario = new javax.swing.JTextField();
+        tfUserName = new javax.swing.JTextField();
         lblPwd = new javax.swing.JLabel();
-        tfPwdReg = new javax.swing.JPasswordField();
+        tfPwd = new javax.swing.JPasswordField();
         tfPwdConf = new javax.swing.JPasswordField();
         lblPwdConf = new javax.swing.JLabel();
         lblTel = new javax.swing.JLabel();
-        tfTelefono = new javax.swing.JTextField();
+        tfTel = new javax.swing.JTextField();
         lblCorreo = new javax.swing.JLabel();
-        tfCorreo = new javax.swing.JTextField();
+        tfMail = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Registro");
+        setTitle("Registration");
         setBackground(new java.awt.Color(242, 240, 240));
         setLocation(new java.awt.Point(650, 300));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(50, 36, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
@@ -160,35 +106,35 @@ public class RegisterGUI extends javax.swing.JFrame {
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNombre.setText("Nombre");
 
-        tfNombre.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfNombre.setToolTipText("Inserte su nombre");
-        tfNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfNombre.setName(""); // NOI18N
+        tfName.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfName.setToolTipText("Inserte su nombre");
+        tfName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfName.setName(""); // NOI18N
 
         lblApellido.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         lblApellido.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblApellido.setText("Apellido");
 
-        tfApellido.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfApellido.setToolTipText("Inserte su apellido");
-        tfApellido.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfApellido.setName(""); // NOI18N
+        tfLastName.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfLastName.setToolTipText("Inserte su apellido");
+        tfLastName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfLastName.setName(""); // NOI18N
 
         lblUsario.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         lblUsario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblUsario.setText("Nombre de usuario");
 
-        tfNombreUsuario.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfNombreUsuario.setToolTipText("Inserte el nombre de usuario");
-        tfNombreUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfNombreUsuario.setName(""); // NOI18N
+        tfUserName.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfUserName.setToolTipText("Inserte el nombre de usuario");
+        tfUserName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfUserName.setName(""); // NOI18N
 
         lblPwd.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         lblPwd.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPwd.setText("Contraseña");
 
-        tfPwdReg.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfPwdReg.setToolTipText("Inserte su contraseña");
+        tfPwd.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfPwd.setToolTipText("Inserte su contraseña");
 
         tfPwdConf.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
         tfPwdConf.setToolTipText("Confirme su contraseña");
@@ -201,19 +147,19 @@ public class RegisterGUI extends javax.swing.JFrame {
         lblTel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTel.setText("Teléfono");
 
-        tfTelefono.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfTelefono.setToolTipText("Inserte el número de teléfono");
-        tfTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfTelefono.setName(""); // NOI18N
+        tfTel.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfTel.setToolTipText("Inserte el número de teléfono");
+        tfTel.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfTel.setName(""); // NOI18N
 
         lblCorreo.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCorreo.setText("Correo Electrónico");
 
-        tfCorreo.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        tfCorreo.setToolTipText("Inserte el correo electrónico");
-        tfCorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tfCorreo.setName(""); // NOI18N
+        tfMail.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        tfMail.setToolTipText("Inserte el correo electrónico");
+        tfMail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tfMail.setName(""); // NOI18N
 
         btnRegistrar.setBackground(new java.awt.Color(19, 28, 70));
         btnRegistrar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -248,11 +194,11 @@ public class RegisterGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMail, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -264,11 +210,11 @@ public class RegisterGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfPwdConf)
                             .addComponent(lblPwdConf, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                            .addComponent(tfPwdReg)
+                            .addComponent(tfPwd)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfTel, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblUsario, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblTel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -285,27 +231,27 @@ public class RegisterGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblUsario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfTel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfPwdReg, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblPwdConf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -313,7 +259,7 @@ public class RegisterGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfMail, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,12 +298,113 @@ public class RegisterGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblPwdConf;
     private javax.swing.JLabel lblTel;
     private javax.swing.JLabel lblUsario;
-    public javax.swing.JTextField tfApellido;
-    public javax.swing.JTextField tfCorreo;
-    public javax.swing.JTextField tfNombre;
-    public javax.swing.JTextField tfNombreUsuario;
+    public javax.swing.JTextField tfLastName;
+    public javax.swing.JTextField tfMail;
+    public javax.swing.JTextField tfName;
+    public javax.swing.JPasswordField tfPwd;
     public javax.swing.JPasswordField tfPwdConf;
-    public javax.swing.JPasswordField tfPwdReg;
-    public javax.swing.JTextField tfTelefono;
+    public javax.swing.JTextField tfTel;
+    public javax.swing.JTextField tfUserName;
     // End of variables declaration//GEN-END:variables
+
+
+// METHODS
+
+    // Validation control
+    
+    private int checkValidations(){
+        
+        int validate = 0;
+        
+        try{
+        
+            getValues();
+
+            String[] values = {user,name,lastName,pwd,pwdConf,tel,mail};
+            String query = "select Usuario from Cliente";
+            String dbUserName = "";
+            boolean doesUserExist = false;
+            
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            
+            while (rs.next()){
+                dbUserName = rs.getString("Usuario");
+                
+                if (user.equals(dbUserName)){
+                   doesUserExist = true;
+                }
+            }
+
+            for (String i: values){
+                if (i.isEmpty()){
+                    validate = 0;
+                    break;
+                } else {
+                    validate = 1;
+                }
+            }
+            
+            if (doesUserExist == true){
+                return 2;
+            }
+
+            if (validate == 1){
+                if (!pwd.equals(pwdConf)){
+                   return 1;
+                 } else {
+                    return 3;
+                   }
+            } else {
+                return validate;
+            }
+            
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        return validate;  
+    }
+    
+     // Registration method
+    
+    private void signUp(){
+        
+        getValues();
+        int val = checkValidations();
+        
+        LoginGUI login = new LoginGUI();
+ 
+        try {
+            
+            String query = "insert into Cliente (Usuario,Nombre,Apellido,Contraseña,Telefono,Correo) values('" 
+                    + user + "','" + name + "','" + lastName + "','" 
+                    + pwd + "','" + tel + "','" + mail + "')";
+
+            st = con.createStatement();
+            
+            // Alert management
+            
+            switch (val) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Recuerde que no puede dejar campos vacíos");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(null, "Este usuario ya existe en la base de datos");
+                    break;
+                default:
+                    st.executeUpdate(query);
+                    JOptionPane.showMessageDialog(null, "¡Bienvenido " + user +"!\nSu usuario ha sido registrado");
+                    login.setVisible(true);
+                    this.setVisible(false);
+                    break;
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
 }
