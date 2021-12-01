@@ -2,7 +2,10 @@
 Link del video: 
 https://youtu.be/h34Q3D1UuVM
 
-# Tecnologies
+Descripción del proyecto:
+
+
+Tecnologías utilizadas:
 - Java Swing
 - MySQL
 - NetBeans IDE
